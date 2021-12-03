@@ -75,4 +75,9 @@ public class PlayerMovement : KinematicBody2D
 		_velocity = MoveAndSlide(_velocity,Vector2.Up);
 		
 	}
+
+	public void _on_JoyStickCanvas_MoveVectorSignal(Vector2 moveVector)
+	{
+		_velocity = MoveAndSlide(moveVector*_speed,Vector2.Up);
+	}
 }
