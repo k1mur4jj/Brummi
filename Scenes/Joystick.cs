@@ -10,12 +10,15 @@ public class Joystick : TouchScreenButton
     // Called when the node enters the scene tree for the first time.
 
     [Signal]
-    public delegate void MoveVectorSignal();
+    public delegate void JumpOnTouch();
 
     private Vector2 _vectorNormalPosition;
     private float _boundary = 100.0F;
 
     private int _ongoingDrag = -1;
+
+    private int _returnAccel = 20;
+    private int _threshold = 20;
 
     public override void _Ready()
     {
@@ -23,43 +26,65 @@ public class Joystick : TouchScreenButton
         _vectorNormalPosition = new Vector2(vector.x / 2, vector.y / 2);
 
     }
+
+    public override void _Process(float delta)
+    {
+        if (_ongoingDrag == -1)
+        {
+            var posDiff = (new Vector2(0, 0) - _vectorNormalPosition) - Position;
+            Position += posDiff * _returnAccel * delta;
+        }
+
+    }
     public override void _Input(InputEvent inputEvent)
     {
 
-        
+
         if (inputEvent is InputEventScreenDrag dragEvent)
         {
-            CalculateMoveVectorAndEmitAsSignal(dragEvent.Position,dragEvent.Index);
+
+            CalculateMoveVectorAndEmitAsSignal(dragEvent.Position, dragEvent.Index);
         }
         if (inputEvent is InputEventScreenTouch touchEvent)
         {
             int index = touchEvent.Index;
-            if (this.IsPressed())
+
+            var currentViewPort = GetViewportRect();
+            if (touchEvent.Position.x > currentViewPort.Size.x * 0.4)
             {
-                CalculateMoveVectorAndEmitAsSignal(touchEvent.Position,index);
+                EmitSignal(nameof(JumpOnTouch));
             }
             else
             {
-                if (index == _ongoingDrag)
+
+                if (this.IsPressed())
                 {
-                    _ongoingDrag = -1;   
+                    CalculateMoveVectorAndEmitAsSignal(touchEvent.Position, index);
+                }
+                else
+                {
+                    if (index == _ongoingDrag)
+                    {
+                        _ongoingDrag = -1;
+                    }
                 }
             }
         }
 
     }
-        
-    public void CalculateMoveVectorAndEmitAsSignal(Vector2 position,int index)
+
+    public void CalculateMoveVectorAndEmitAsSignal(Vector2 position, int index)
     {
+      
         Sprite parent = (Sprite)GetParent();
         var eventDistanceFromCenter = (position - parent.GlobalPosition).Length();
-        
-        if (eventDistanceFromCenter <= _boundary*GlobalScale.x || index == _ongoingDrag)
+
+        if (eventDistanceFromCenter <= _boundary * GlobalScale.x || index == _ongoingDrag)
         {
-            GlobalPosition = position - _vectorNormalPosition *GlobalScale;
-            if( GetButtonPosition().Length() > _boundary)
+            GlobalPosition = position - _vectorNormalPosition * GlobalScale;
+            if (GetButtonPosition().Length() > _boundary)
             {
-                Position = GetButtonPosition().Normalized()*_boundary - _vectorNormalPosition;
+                Position = GetButtonPosition().Normalized() * _boundary - _vectorNormalPosition;
             }
             _ongoingDrag = index;
         }
@@ -71,6 +96,16 @@ public class Joystick : TouchScreenButton
     public Vector2 GetButtonPosition()
     {
         return Position + _vectorNormalPosition;
+    }
+
+    public Vector2 GetValue()
+    {
+        if (GetButtonPosition().Length() > _threshold)
+        {
+            return GetButtonPosition().Normalized();
+        }
+        return new Vector2(0, 0);
+
     }
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
     //  public override void _Process(float delta)
