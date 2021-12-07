@@ -15,6 +15,9 @@ public class PlayerMovement : KinematicBody2D
 	{
 		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		_joystick = GetNode<Joystick> ("JoystickCanvasLayer/JoyStickSprite/JoyStickTouchScreenButton");
+		var skeleton = GetNode<Skeleton2D> ("Skeleton2D");
+		skeleton.Scale = new Vector2(0.3f,0.3f);
+
 		_joystick.Connect("JumpOnTouch",this,nameof(_OnJumpTouch));
 		if(!OS.HasTouchscreenUiHint())
 		{
@@ -93,22 +96,19 @@ public class PlayerMovement : KinematicBody2D
 			}
 
 		}
-		if(_velocity.x > 0)		
-		{
-			GD.Print("Right",_velocity);
-			// ApplyScale(new Vector2(1,1));
-		}
-		else if(_velocity.x < 0 )
-		{
-			GD.Print("Left",_velocity);
-			// ApplyScale(new Vector2(-1,1));
-		}
+		// if(_velocity.x > 0)		
+		// {
+		// 	ApplyScale(new Vector2(1,1));
+		// }
+		// else if(_velocity.x < 0 )
+		// {
+		// 	ApplyScale(new Vector2(-1,1));
+		// }
 	
 
 		if(_velocity.x != 0 && IsOnFloor())
 		{
 			_animationPlayer.Play("Run");
-			GD.Print("RUN");
 		}
 		else if( IsOnFloor())
 		{
