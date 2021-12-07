@@ -9,14 +9,15 @@ public class ParallaxLayer : Godot.ParallaxLayer
 
     // Called when the node enters the scene tree for the first time.
     private Camera2D _camera;
-    private float _spriteScale = 0.5f;
+    [Export]
+    private float _cloudSpeed=-15;
     private Vector2 _lastScreenSize;
     public override void _Ready()
     {
-       _camera = GetTree().CurrentScene.GetNode<Camera2D>("BrummiPlayer/Camera2D");
     }
     public override void _Process(float delta)
     {
+        MotionOffset = new Vector2(MotionOffset.x+_cloudSpeed*delta,0);
         // var screen_size = GetViewportRect().Size * _camera.Zoom;
         // if (screen_size != _lastScreenSize)
         // {
