@@ -489,7 +489,7 @@ script = ExtResource( 8 )
 
 [node name="Sprite2" type="Sprite" parent="Background/ParallaxBackground/ParallaxLayer"]
 position = Vector2( -688, -925 )
-scale = Vector2( 0.7, 0.7 )
+scale = Vector2( 0.5, 0.5 )
 z_index = -1
 texture = ExtResource( 7 )
 centered = false
@@ -501,13 +501,13 @@ texture = ExtResource( 9 )
 centered = false
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="Background/ParallaxBackground"]
-motion_scale = Vector2( 0.9, 1 )
+motion_scale = Vector2( 0.8, 1 )
 motion_mirroring = Vector2( 3840, 0 )
 script = ExtResource( 8 )
 
 [node name="Sprite2" type="Sprite" parent="Background/ParallaxBackground/ParallaxLayer2"]
-position = Vector2( -688, -2203 )
-scale = Vector2( 0.7, 0.7 )
+position = Vector2( -688, -1559 )
+scale = Vector2( 0.5, 0.5 )
 z_index = -1
 texture = ExtResource( 10 )
 centered = false
@@ -568,14 +568,14 @@ offset = Vector2( 301.017, -1027.16 )
 
 [node name="Tree9" type="Sprite" parent="Foreground"]
 modulate = Color( 0, 0, 0, 1 )
-position = Vector2( -341, -265 )
+position = Vector2( -353, -209 )
 scale = Vector2( 2.17563, 1.73251 )
 z_index = 1
 texture = ExtResource( 4 )
 offset = Vector2( 1163.05, 502.279 )
 
 [node name="Tree10" type="Sprite" parent="Foreground"]
-position = Vector2( 696, -1474 )
+position = Vector2( 696, -1514 )
 scale = Vector2( 2.17563, 1.73251 )
 texture = ExtResource( 5 )
 offset = Vector2( -4.68274, 304.33 )
@@ -618,7 +618,7 @@ offset = Vector2( 24.2399, 96.5619 )
 
 [node name="Tree15" type="Sprite" parent="Foreground"]
 modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 566, -1306 )
+position = Vector2( 579, -1421 )
 rotation = 3.14159
 scale = Vector2( 2.17563, 1.73251 )
 z_index = 1
