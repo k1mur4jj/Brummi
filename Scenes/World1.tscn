@@ -1,16 +1,19 @@
-[gd_scene load_steps=61 format=2]
+[gd_scene load_steps=66 format=2]
 
 [ext_resource path="res://Player/BrummiPlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Resources/Tiles/Tileset1_V1.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/TileMap.cs" type="Script" id=3]
-[ext_resource path="res://Resources/Background1/tree1.png" type="Texture" id=4]
+[ext_resource path="res://Resources/Tree1.png" type="Texture" id=4]
 [ext_resource path="res://Resources/Background1/tree2.png" type="Texture" id=5]
-[ext_resource path="res://Resources/Background1/tree22.png" type="Texture" id=6]
+[ext_resource path="res://Resources/Pedolino.svg" type="Texture" id=6]
 [ext_resource path="res://Resources/Background1/Layers/BackgroundForExport/BackgroundForExport/Layer 16.PNG" type="Texture" id=7]
-[ext_resource path="res://Scenes/ParallaxLayer.cs" type="Script" id=8]
+[ext_resource path="res://Scenes/CutScenes1/MeetPedolino.tres" type="Animation" id=8]
 [ext_resource path="res://Resources/Background1/Layers/BackgroundForExport/BackgroundForExport/Layer 23 Merged.PNG" type="Texture" id=9]
 [ext_resource path="res://Resources/Background1/Layers/BackgroundForExport/Layer 18.PNG" type="Texture" id=10]
 [ext_resource path="res://Resources/Background1/Layers/BackgroundForExport/Layer 8.PNG" type="Texture" id=11]
+[ext_resource path="res://Resources/questionmark.png" type="Texture" id=12]
+[ext_resource path="res://Scenes/Area2D.cs" type="Script" id=13]
+[ext_resource path="res://addons/dialogic/Dialog.tscn" type="PackedScene" id=14]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
@@ -470,6 +473,60 @@ points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
 } ]
 0/z_index = 0
 
+[sub_resource type="Animation" id=50]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pedolino:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 15.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pedolino:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 4419, -1162 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Questionmark:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 15.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Questionmark:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 4469, -1263 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=51]
+extents = Vector2( 115, 319.25 )
+
 [node name="World1" type="Node2D"]
 __meta__ = {
 "_edit_horizontal_guides_": [  ],
@@ -485,24 +542,22 @@ transform = Transform2D( 1, 0, 0, 1, 0, -200 )
 
 [node name="Sprite" type="Sprite" parent="Background/ParallaxBackground"]
 show_behind_parent = true
-position = Vector2( -2369, -2580 )
+position = Vector2( -1527, -2630 )
 texture = ExtResource( 11 )
 centered = false
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="Background/ParallaxBackground"]
-motion_scale = Vector2( 0.5, 1 )
-motion_mirroring = Vector2( 3840, 0 )
-script = ExtResource( 8 )
+visible = false
+motion_mirroring = Vector2( 512, 0 )
 
 [node name="Sprite3" type="Sprite" parent="Background/ParallaxBackground/ParallaxLayer3"]
 self_modulate = Color( 0.94902, 0.945098, 0.941176, 1 )
-position = Vector2( -688, -661 )
-scale = Vector2( 0.5, 0.5 )
 z_index = -1
 texture = ExtResource( 7 )
 centered = false
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="Background/ParallaxBackground"]
+visible = false
 motion_scale = Vector2( 0.5, 1 )
 motion_mirroring = Vector2( 3840, 0 )
 
@@ -523,6 +578,20 @@ z_index = -1
 texture = ExtResource( 10 )
 centered = false
 
+[node name="Sprite3" type="Sprite" parent="Background/ParallaxBackground/ParallaxLayer2"]
+position = Vector2( -302, -59 )
+scale = Vector2( 0.239, 0.255 )
+z_index = -1
+texture = ExtResource( 4 )
+centered = false
+
+[node name="Sprite4" type="Sprite" parent="Background/ParallaxBackground/ParallaxLayer2"]
+position = Vector2( 240, 128 )
+scale = Vector2( 0.239, 0.255 )
+z_index = -1
+texture = ExtResource( 4 )
+centered = false
+
 [node name="Middleground" type="Node2D" parent="."]
 
 [node name="TileMap" type="TileMap" parent="Middleground"]
@@ -534,162 +603,252 @@ script = ExtResource( 3 )
 
 [node name="Foreground" type="Node2D" parent="."]
 
-[node name="Tree1" type="Sprite" parent="Foreground"]
-modulate = Color( 0, 0, 0, 1 )
-position = Vector2( -1007, -751 )
-scale = Vector2( 1.475, 1.31625 )
-z_index = 1
-texture = ExtResource( 4 )
-offset = Vector2( -174.915, 141.311 )
-
-[node name="Tree3" type="Sprite" parent="Foreground"]
-position = Vector2( 6693, 720 )
-scale = Vector2( 1.475, 1.31625 )
-texture = ExtResource( 5 )
-offset = Vector2( -1864.07, -265.052 )
-
-[node name="Tree4" type="Sprite" parent="Foreground"]
-modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 6693, 720 )
-scale = Vector2( 1.475, 1.31625 )
-z_index = 1
-texture = ExtResource( 4 )
-offset = Vector2( -2167.8, -360.019 )
-
-[node name="Tree5" type="Sprite" parent="Foreground"]
-position = Vector2( -1091, 93 )
-scale = Vector2( 1.475, 1.31625 )
-texture = ExtResource( 5 )
-
-[node name="Tree6" type="Sprite" parent="Foreground"]
-modulate = Color( 0, 0, 0, 1 )
-position = Vector2( -929, 304 )
-scale = Vector2( 1.475, 1.31625 )
-z_index = 1
-texture = ExtResource( 4 )
-offset = Vector2( -169.492, -132.954 )
-
-[node name="Tree7" type="Sprite" parent="Foreground"]
-modulate = Color( 0, 0, 0, 1 )
-position = Vector2( -144, 2827 )
-scale = Vector2( 2.17563, 1.73251 )
-z_index = 1
-texture = ExtResource( 4 )
-offset = Vector2( 301.017, -1027.16 )
-
-[node name="Tree9" type="Sprite" parent="Foreground"]
-modulate = Color( 0, 0, 0, 1 )
-position = Vector2( -353, -209 )
-scale = Vector2( 2.17563, 1.73251 )
-z_index = 1
-texture = ExtResource( 4 )
-offset = Vector2( 1163.05, 502.279 )
-
-[node name="Tree10" type="Sprite" parent="Foreground"]
-position = Vector2( 696, -1514 )
-scale = Vector2( 2.17563, 1.73251 )
-texture = ExtResource( 5 )
-offset = Vector2( -4.68274, 304.33 )
-
-[node name="Tree8" type="Sprite" parent="Foreground"]
-position = Vector2( -352, -377 )
-scale = Vector2( 2.17563, 1.73251 )
-texture = ExtResource( 5 )
-offset = Vector2( 1466.78, 597.246 )
-
-[node name="Tree11" type="Sprite" parent="Foreground"]
-modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 6693, 720 )
-scale = Vector2( 2.17563, 1.73251 )
-z_index = 1
-texture = ExtResource( 4 )
-offset = Vector2( -86.2974, -26.7494 )
-
-[node name="Tree2" type="Sprite" parent="Foreground"]
-position = Vector2( -2014, 149 )
-scale = Vector2( 1.475, 1.31625 )
-z_index = 1
-texture = ExtResource( 5 )
-offset = Vector2( 942.373, 537.132 )
-
-[node name="Tree22" type="Sprite" parent="Foreground"]
-position = Vector2( 4400, -1387 )
-scale = Vector2( 0.5, 0.5 )
+[node name="Sprite" type="Sprite" parent="Foreground"]
+position = Vector2( 4366, -1421 )
+scale = Vector2( 0.6, 0.6 )
 z_index = -1
-texture = ExtResource( 6 )
-
-[node name="Tree13" type="Sprite" parent="Foreground"]
-modulate = Color( 0, 0, 0, 1 )
-position = Vector2( -622.868, -770.152 )
-rotation = -1.0472
-scale = Vector2( 1.475, 1.31625 )
-z_index = 1
 texture = ExtResource( 4 )
-offset = Vector2( 24.2399, 96.5619 )
 
-[node name="Tree15" type="Sprite" parent="Foreground"]
-modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 579, -1421 )
-rotation = 3.14159
-scale = Vector2( 2.17563, 1.73251 )
+[node name="Foreground" type="Node2D" parent="Foreground"]
 z_index = 1
-texture = ExtResource( 4 )
-offset = Vector2( -244.746, 27.3505 )
 
-[node name="Tree14" type="Sprite" parent="Foreground"]
-modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 411, -1137 )
-scale = Vector2( 1.475, 1.31625 )
-z_index = 1
-texture = ExtResource( 4 )
-offset = Vector2( -244.746, 27.3505 )
-
-[node name="Tree16" type="Sprite" parent="Foreground"]
-position = Vector2( 2398, -989 )
-scale = Vector2( 1.475, 1.31625 )
+[node name="Tree18" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( -802, 368 )
+rotation = 3.82743e-10
 texture = ExtResource( 5 )
-offset = Vector2( 1466.78, 597.246 )
+offset = Vector2( 274.932, 118.883 )
 
-[node name="Tree17" type="Sprite" parent="Foreground"]
-modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 2398, -989 )
-scale = Vector2( 1.475, 1.31625 )
-z_index = 1
-texture = ExtResource( 4 )
-offset = Vector2( 1163.05, 502.279 )
-
-[node name="Tree18" type="Sprite" parent="Foreground"]
-modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 7492, 330 )
-scale = Vector2( 2.17563, 1.73251 )
-z_index = 1
-texture = ExtResource( 4 )
-offset = Vector2( -169.492, -132.954 )
-
-[node name="Tree19" type="Sprite" parent="Foreground"]
-position = Vector2( -1015, 301 )
-scale = Vector2( 1.475, 1.31625 )
+[node name="Tree19" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( -802, 368 )
+rotation = 3.82743e-10
 texture = ExtResource( 5 )
-offset = Vector2( 1466.78, 597.246 )
+offset = Vector2( 274.932, 118.883 )
 
-[node name="Tree20" type="Sprite" parent="Foreground"]
-modulate = Color( 0, 0, 0, 1 )
-position = Vector2( -1015, 301 )
-scale = Vector2( 1.475, 1.31625 )
-z_index = 1
-texture = ExtResource( 4 )
-offset = Vector2( 1163.05, 502.279 )
+[node name="Tree20" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( -802, 368 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( 274.932, 118.883 )
 
-[node name="Tree21" type="Sprite" parent="Foreground"]
-modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 5805, -98.9998 )
-scale = Vector2( 2.17563, 1.73251 )
-z_index = 1
-texture = ExtResource( 4 )
-offset = Vector2( -169.492, -132.954 )
+[node name="Tree21" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( -802, 368 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( 255.932, 409.883 )
+
+[node name="Tree22" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( -802, 368 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -66.5737, 320.002 )
+
+[node name="Tree23" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( -802, 368 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( 983.932, 299.883 )
+
+[node name="Tree24" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( -802, 368 )
+rotation = 3.82743e-10
+scale = Vector2( 1.46061, 1.31337 )
+texture = ExtResource( 5 )
+offset = Vector2( -47.4516, -74.1263 )
+
+[node name="Tree25" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( -802, 368 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( 641.865, 462.448 )
+
+[node name="Tree26" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( -802, 368 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -394.574, 233.002 )
+
+[node name="Tree27" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( -802, 368 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -430.574, -128.998 )
+
+[node name="Tree28" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( -802, 368 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -168.574, 498.002 )
+
+[node name="Tree29" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( -802, 368 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( 2233.36, -68.1007 )
+
+[node name="Tree30" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( -802, 368 )
+rotation = 3.82743e-10
+scale = Vector2( 1.66596, 1.7942 )
+texture = ExtResource( 5 )
+offset = Vector2( 4161.36, -573.087 )
+
+[node name="Tree31" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 1377, 780 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -162.494, 143.212 )
+
+[node name="Tree32" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 1377, 780 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -162.494, 143.212 )
+
+[node name="Tree33" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 1377, 780 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -162.494, 143.212 )
+
+[node name="Tree34" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 1377, 780 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -181.494, 434.212 )
+
+[node name="Tree35" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 1377, 780 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -504, 344.331 )
+
+[node name="Tree36" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 1068.14, 29.1007 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( 639.932, 560.883 )
+
+[node name="Tree37" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( -64.4263, -29.6709 )
+rotation = 3.82743e-10
+scale = Vector2( 1.46061, 1.31337 )
+texture = ExtResource( 5 )
+offset = Vector2( 639.932, 560.883 )
+
+[node name="Tree38" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 1377, 780 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -11.0001, -27.4514 )
+
+[node name="Tree39" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 495.574, 1006.33 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( 49.4263, 31.0021 )
+
+[node name="Tree40" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 459.574, 644.329 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( 49.4263, 31.0021 )
+
+[node name="Tree41" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 1377, 780 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -606, 522.331 )
+
+[node name="Tree42" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 2139, 576 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -312.093, -265.558 )
+
+[node name="Tree43" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 8769.57, -424.671 )
+rotation = 3.82743e-10
+scale = Vector2( 1.66596, 1.7942 )
+texture = ExtResource( 5 )
+offset = Vector2( -538.639, 111.899 )
+
+[node name="Tree44" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 1853, 863 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( 212.506, -85.3363 )
+
+[node name="Tree45" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 1853, 863 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( 212.506, -85.3363 )
+
+[node name="Tree46" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 1853, 863 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( 212.506, -85.3363 )
+
+[node name="Tree47" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 1853, 863 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( 193.506, 205.664 )
+
+[node name="Tree48" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 1853, 863 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -129, 115.783 )
+
+[node name="Tree49" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 1853, 863 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( 364, -256 )
+
+[node name="Tree50" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 1853, 863 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -231, 293.783 )
+
+[node name="Background" type="Node2D" parent="Foreground"]
+z_index = -1
+
+[node name="Tree24" type="Sprite" parent="Foreground/Background"]
+position = Vector2( 4939, -1421 )
+rotation = 7.65486e-10
+texture = ExtResource( 5 )
+offset = Vector2( 639.932, 560.883 )
+
+[node name="Tree20" type="Sprite" parent="Foreground/Background"]
+position = Vector2( -1103, -342 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( 639.932, 560.883 )
+
+[node name="Tree21" type="Sprite" parent="Foreground/Background"]
+position = Vector2( -546, -68 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( 639.932, 560.883 )
+
+[node name="Tree22" type="Sprite" parent="Foreground/Background"]
+position = Vector2( -804, -127 )
+rotation = 7.65486e-10
+texture = ExtResource( 5 )
+offset = Vector2( 639.932, 560.883 )
+
+[node name="Tree23" type="Sprite" parent="Foreground/Background"]
+position = Vector2( 2922, -861 )
+rotation = 1.14823e-09
+texture = ExtResource( 5 )
+offset = Vector2( 639.932, 560.883 )
 
 [node name="BrummiPlayer" parent="." instance=ExtResource( 1 )]
-position = Vector2( -4, 246 )
+position = Vector2( 0, 183 )
 scale = Vector2( 0.3, 0.3 )
 
 [node name="Camera2D" type="Camera2D" parent="BrummiPlayer"]
@@ -697,3 +856,37 @@ position = Vector2( 0, -366 )
 scale = Vector2( 10, 10 )
 current = true
 smoothing_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/MeetPedolino = ExtResource( 8 )
+anims/RESET = SubResource( 50 )
+
+[node name="Pedolino" type="Sprite" parent="."]
+position = Vector2( 4419, -1162 )
+rotation = 0.261799
+scale = Vector2( 0.223958, 0.216146 )
+z_index = -1
+texture = ExtResource( 6 )
+
+[node name="Questionmark" type="Sprite" parent="."]
+visible = false
+position = Vector2( 4469, -1263 )
+rotation = 0.261799
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 12 )
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( 3583, -1258 )
+script = ExtResource( 13 )
+
+[node name="MeetPedolino" parent="Area2D" instance=ExtResource( 14 )]
+margin_left = 1009.0
+margin_top = -74.0
+margin_right = 1009.0
+margin_bottom = -74.0
+timeline = "timeline-1639087965.json"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 51 )
+
+[connection signal="body_entered" from="Area2D" to="BrummiPlayer" method="_On_Area2D_body_entered"]

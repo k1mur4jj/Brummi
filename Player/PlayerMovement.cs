@@ -101,7 +101,7 @@ public class PlayerMovement : KinematicBody2D
 		// 	ApplyScale(new Vector2(1,1));
 		// }
 		// else if(_velocity.x < 0 )
-		// {
+		// {a
 		// 	ApplyScale(new Vector2(-1,1));
 		// }
 	
@@ -120,4 +120,27 @@ public class PlayerMovement : KinematicBody2D
 		
 	}
 
+	private bool _alreadyMet = false;
+	public void _On_Area2D_body_entered(Area2D area)
+	{
+		_alreadyMet=false;
+		if(_alreadyMet == false)
+		{
+			AnimationPlayer worldPlayer = GetNode<AnimationPlayer>("../AnimationPlayer");
+			worldPlayer.Play("MeetPedolino");
+			_alreadyMet = true;
+
+			// DialogicSharp.Start("FirstMeetPedolino");
+			var dialog = DialogicSharp.Start("FirstMeetPedolino"); 
+
+			Control dialoge = area.GetNode<Control>("MeetPedolino");
+			dialoge.Visible = true;
+			
+			// GD.Print(dialog);
+			// area.AddChild(dialog); 
+		}
+
+	}
+
 }
+
