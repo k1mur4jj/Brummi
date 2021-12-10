@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=2]
+[gd_scene load_steps=66 format=2]
 
 [ext_resource path="res://Player/BrummiPlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Resources/Tiles/Tileset1_V1.png" type="Texture" id=2]
@@ -9,8 +9,9 @@
 [ext_resource path="res://Resources/Background1/Layers/BackgroundForExport/BackgroundForExport/Layer 16.PNG" type="Texture" id=7]
 [ext_resource path="res://Scenes/CutScenes1/MeetPedolino.tres" type="Animation" id=8]
 [ext_resource path="res://Resources/Background1/Layers/BackgroundForExport/BackgroundForExport/Layer 23 Merged.PNG" type="Texture" id=9]
-[ext_resource path="res://Resources/Background1/Layers/BackgroundForExport/Layer 18.PNG" type="Texture" id=10]
+[ext_resource path="res://Resources/Background1/Background1.png" type="Texture" id=10]
 [ext_resource path="res://Resources/Background1/Layers/BackgroundForExport/Layer 8.PNG" type="Texture" id=11]
+[ext_resource path="res://icon.png" type="Texture" id=12]
 [ext_resource path="res://Scenes/Area2D.cs" type="Script" id=13]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
@@ -525,7 +526,7 @@ transform = Transform2D( 1, 0, 0, 1, 0, -200 )
 
 [node name="Sprite" type="Sprite" parent="Background/ParallaxBackground"]
 show_behind_parent = true
-position = Vector2( -1527, -2630 )
+position = Vector2( -1458, -1926 )
 texture = ExtResource( 11 )
 centered = false
 
@@ -551,6 +552,7 @@ texture = ExtResource( 9 )
 centered = false
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="Background/ParallaxBackground"]
+visible = false
 motion_scale = Vector2( 0.8, 1 )
 motion_mirroring = Vector2( 3840, 0 )
 
@@ -562,14 +564,14 @@ texture = ExtResource( 10 )
 centered = false
 
 [node name="Sprite3" type="Sprite" parent="Background/ParallaxBackground/ParallaxLayer2"]
-position = Vector2( -302, -59 )
+position = Vector2( -302, -120 )
 scale = Vector2( 0.239, 0.255 )
 z_index = -1
 texture = ExtResource( 4 )
 centered = false
 
 [node name="Sprite4" type="Sprite" parent="Background/ParallaxBackground/ParallaxLayer2"]
-position = Vector2( 240, 128 )
+position = Vector2( 1031, -262 )
 scale = Vector2( 0.239, 0.255 )
 z_index = -1
 texture = ExtResource( 4 )
@@ -669,29 +671,29 @@ texture = ExtResource( 5 )
 offset = Vector2( 2233.36, -68.1007 )
 
 [node name="Tree30" type="Sprite" parent="Foreground/Foreground"]
-position = Vector2( -802, 368 )
+position = Vector2( -2999, 961 )
 rotation = 3.82743e-10
 scale = Vector2( 1.66596, 1.7942 )
 texture = ExtResource( 5 )
 offset = Vector2( 4161.36, -573.087 )
 
 [node name="Tree31" type="Sprite" parent="Foreground/Foreground"]
-position = Vector2( 1377, 780 )
+position = Vector2( 2835.49, 224.451 )
 rotation = 3.82743e-10
 texture = ExtResource( 5 )
-offset = Vector2( -162.494, 143.212 )
+offset = Vector2( -412.494, 183.212 )
 
 [node name="Tree32" type="Sprite" parent="Foreground/Foreground"]
-position = Vector2( 1377, 780 )
+position = Vector2( 2835.49, 224.451 )
 rotation = 3.82743e-10
 texture = ExtResource( 5 )
-offset = Vector2( -162.494, 143.212 )
+offset = Vector2( -412.494, 183.212 )
 
 [node name="Tree33" type="Sprite" parent="Foreground/Foreground"]
-position = Vector2( 1377, 780 )
+position = Vector2( 2835.49, 224.451 )
 rotation = 3.82743e-10
 texture = ExtResource( 5 )
-offset = Vector2( -162.494, 143.212 )
+offset = Vector2( -412.494, 183.212 )
 
 [node name="Tree34" type="Sprite" parent="Foreground/Foreground"]
 position = Vector2( 1377, 780 )
@@ -712,17 +714,17 @@ texture = ExtResource( 5 )
 offset = Vector2( 639.932, 560.883 )
 
 [node name="Tree37" type="Sprite" parent="Foreground/Foreground"]
-position = Vector2( -64.4263, -29.6709 )
+position = Vector2( 240, -4 )
 rotation = 3.82743e-10
 scale = Vector2( 1.46061, 1.31337 )
 texture = ExtResource( 5 )
 offset = Vector2( 639.932, 560.883 )
 
 [node name="Tree38" type="Sprite" parent="Foreground/Foreground"]
-position = Vector2( 1377, 780 )
+position = Vector2( 2835.49, 224.451 )
 rotation = 3.82743e-10
 texture = ExtResource( 5 )
-offset = Vector2( -11.0001, -27.4514 )
+offset = Vector2( -261, 12.5486 )
 
 [node name="Tree39" type="Sprite" parent="Foreground/Foreground"]
 position = Vector2( 495.574, 1006.33 )
@@ -731,7 +733,7 @@ texture = ExtResource( 5 )
 offset = Vector2( 49.4263, 31.0021 )
 
 [node name="Tree40" type="Sprite" parent="Foreground/Foreground"]
-position = Vector2( 459.574, 644.329 )
+position = Vector2( 611, 739 )
 rotation = 3.82743e-10
 texture = ExtResource( 5 )
 offset = Vector2( 49.4263, 31.0021 )
@@ -780,10 +782,10 @@ texture = ExtResource( 5 )
 offset = Vector2( 193.506, 205.664 )
 
 [node name="Tree48" type="Sprite" parent="Foreground/Foreground"]
-position = Vector2( 1853, 863 )
+position = Vector2( 2835.49, 224.451 )
 rotation = 3.82743e-10
 texture = ExtResource( 5 )
-offset = Vector2( -129, 115.783 )
+offset = Vector2( 97, 238.783 )
 
 [node name="Tree49" type="Sprite" parent="Foreground/Foreground"]
 position = Vector2( 1853, 863 )
@@ -796,6 +798,36 @@ position = Vector2( 1853, 863 )
 rotation = 3.82743e-10
 texture = ExtResource( 5 )
 offset = Vector2( -231, 293.783 )
+
+[node name="Tree51" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 3628, 370 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -397, -9.33658 )
+
+[node name="Tree52" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 3628, 370 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -397, -9.33658 )
+
+[node name="Tree53" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 3628, 370 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -397, -9.33658 )
+
+[node name="Tree54" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 3628, 370 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( -245.506, -180 )
+
+[node name="Tree55" type="Sprite" parent="Foreground/Foreground"]
+position = Vector2( 3628, 370 )
+rotation = 3.82743e-10
+texture = ExtResource( 5 )
+offset = Vector2( 112.494, 46.2344 )
 
 [node name="Background" type="Node2D" parent="Foreground"]
 position = Vector2( -302, -72 )
@@ -826,13 +858,39 @@ texture = ExtResource( 5 )
 offset = Vector2( 639.932, 560.883 )
 
 [node name="Tree23" type="Sprite" parent="Foreground/Background"]
-position = Vector2( 2922, -861 )
+position = Vector2( 3551, -1186 )
 rotation = 1.14823e-09
 texture = ExtResource( 5 )
 offset = Vector2( 639.932, 560.883 )
 
+[node name="Sprite2" type="Sprite" parent="Foreground"]
+position = Vector2( 1928, -280 )
+scale = Vector2( 0.304688, 0.320755 )
+z_index = -2
+texture = ExtResource( 12 )
+offset = Vector2( 254.359, 24.9412 )
+
+[node name="Sprite3" type="Sprite" parent="Foreground"]
+position = Vector2( 1953, -274 )
+scale = Vector2( 0.304688, 0.320755 )
+z_index = -2
+texture = ExtResource( 12 )
+offset = Vector2( 26.2563, 6.23529 )
+
+[node name="Sprite4" type="Sprite" parent="Foreground"]
+position = Vector2( 2086, -281 )
+scale = Vector2( 0.304688, 0.320755 )
+texture = ExtResource( 12 )
+offset = Vector2( 13.1284, 24.9412 )
+
+[node name="Sprite5" type="Sprite" parent="Foreground"]
+position = Vector2( 2086, -281 )
+scale = Vector2( 0.304688, 0.320755 )
+texture = ExtResource( 12 )
+offset = Vector2( -119.795, 24.9412 )
+
 [node name="BrummiPlayer" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1647, -200 )
+position = Vector2( 118, 212 )
 scale = Vector2( 0.3, 0.3 )
 
 [node name="Camera2D" type="Camera2D" parent="BrummiPlayer"]
