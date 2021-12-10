@@ -3,18 +3,18 @@
 	"description": "",
 	"display_name": "",
 	"display_name_bool": false,
-	"id": "character-1639087813.json",
+	"id": "character-1639162184.json",
 	"mirror_portraits": false,
-	"name": "Pedolino",
+	"name": "Brummi",
 	"nickname": "",
 	"nickname_bool": false,
-	"offset_x": 0,
-	"offset_y": 0,
+	"offset_x": -100,
+	"offset_y": -50,
 	"portraits": [
 		{
 			"name": "Default",
-			"path": "res://Resources/Pedolino.svg"
+			"path": "res://Resources/Kopf.svg"
 		}
 	],
-	"scale": 100
+	"scale": 7
 }
