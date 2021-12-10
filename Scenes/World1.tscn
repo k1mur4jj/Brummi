@@ -508,7 +508,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=51]
-extents = Vector2( 115, 319.25 )
+extents = Vector2( 105.5, 279 )
 
 [node name="World1" type="Node2D"]
 __meta__ = {
@@ -832,7 +832,7 @@ texture = ExtResource( 5 )
 offset = Vector2( 639.932, 560.883 )
 
 [node name="BrummiPlayer" parent="." instance=ExtResource( 1 )]
-position = Vector2( 3072, -688 )
+position = Vector2( 1647, -200 )
 scale = Vector2( 0.3, 0.3 )
 
 [node name="Camera2D" type="Camera2D" parent="BrummiPlayer"]
@@ -857,7 +857,7 @@ position = Vector2( 3583, -1258 )
 script = ExtResource( 13 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 506, -216 )
+position = Vector2( 496.5, -215 )
 shape = SubResource( 51 )
 
 [connection signal="body_entered" from="Area2D" to="BrummiPlayer" method="_On_Area2D_body_entered"]
