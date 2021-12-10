@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=2]
+[gd_scene load_steps=65 format=2]
 
 [ext_resource path="res://Player/BrummiPlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Resources/Tiles/Tileset1_V1.png" type="Texture" id=2]
@@ -11,9 +11,7 @@
 [ext_resource path="res://Resources/Background1/Layers/BackgroundForExport/BackgroundForExport/Layer 23 Merged.PNG" type="Texture" id=9]
 [ext_resource path="res://Resources/Background1/Layers/BackgroundForExport/Layer 18.PNG" type="Texture" id=10]
 [ext_resource path="res://Resources/Background1/Layers/BackgroundForExport/Layer 8.PNG" type="Texture" id=11]
-[ext_resource path="res://Resources/questionmark.png" type="Texture" id=12]
 [ext_resource path="res://Scenes/Area2D.cs" type="Script" id=13]
-[ext_resource path="res://addons/dialogic/Dialog.tscn" type="PackedScene" id=14]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
@@ -508,30 +506,6 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector2( 4419, -1162 ) ]
 }
-tracks/2/type = "value"
-tracks/2/path = NodePath("Questionmark:rotation_degrees")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 15.0 ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("Questionmark:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 4469, -1263 ) ]
-}
 
 [sub_resource type="RectangleShape2D" id=51]
 extents = Vector2( 115, 319.25 )
@@ -824,6 +798,7 @@ texture = ExtResource( 5 )
 offset = Vector2( -231, 293.783 )
 
 [node name="Background" type="Node2D" parent="Foreground"]
+position = Vector2( -302, -72 )
 z_index = -1
 
 [node name="Tree24" type="Sprite" parent="Foreground/Background"]
@@ -857,7 +832,7 @@ texture = ExtResource( 5 )
 offset = Vector2( 639.932, 560.883 )
 
 [node name="BrummiPlayer" parent="." instance=ExtResource( 1 )]
-position = Vector2( 0, 183 )
+position = Vector2( 3072, -688 )
 scale = Vector2( 0.3, 0.3 )
 
 [node name="Camera2D" type="Camera2D" parent="BrummiPlayer"]
@@ -877,25 +852,12 @@ scale = Vector2( 0.223958, 0.216146 )
 z_index = -1
 texture = ExtResource( 6 )
 
-[node name="Questionmark" type="Sprite" parent="."]
-visible = false
-position = Vector2( 4469, -1263 )
-rotation = 0.261799
-scale = Vector2( 0.4, 0.4 )
-texture = ExtResource( 12 )
-
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2( 3583, -1258 )
 script = ExtResource( 13 )
 
-[node name="Dialog" parent="Area2D" instance=ExtResource( 14 )]
-margin_left = 1065.0
-margin_top = -98.0
-margin_right = 1065.0
-margin_bottom = -98.0
-timeline = "timeline-1639162524.json"
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 506, -216 )
 shape = SubResource( 51 )
 
 [connection signal="body_entered" from="Area2D" to="BrummiPlayer" method="_On_Area2D_body_entered"]
