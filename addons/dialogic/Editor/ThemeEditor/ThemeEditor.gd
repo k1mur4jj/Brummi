@@ -5,7 +5,6 @@ var editor_reference
 onready var master_tree = get_node('../MasterTreeContainer/MasterTree')
 onready var settings_editor = get_node('../SettingsEditor')
 var current_theme : String = ''
-var use_advanced_themes : bool = false
 var preview_character_selected : String = 'random'
 var current_choice_modifier_selected = 'hover'
 
@@ -36,13 +35,6 @@ var first_time_loading_theme_full_size_bug := 0
 # complain because "that is not how you are supposed to work". If there was only
 # a way to set an id and then access that node via id...
 # Here you have paths in all its glory. Praise the paths (っ´ω`c)♡
-onready var advanced_containers := {
-	'buttons' : {
-		'container': $"VBoxContainer/TabContainer/Choice Buttons/Column3/GridContainer",
-		'disabled_text': $"VBoxContainer/TabContainer/Choice Buttons/Column3/Label"
-	}
-}
-
 onready var n : Dictionary = {
 	# Dialog Text
 	'theme_text_shadow': $"VBoxContainer/TabContainer/Dialog Text/Column2/GridContainer/HBoxContainer2/CheckBoxShadow",
@@ -81,8 +73,8 @@ onready var n : Dictionary = {
 	'next_animation': $"VBoxContainer/TabContainer/Dialog Box/Column2/GridContainer/NextAnimation",
 	'next_indicator_scale': $"VBoxContainer/TabContainer/Dialog Box/Column2/GridContainer/HBoxContainer7/IndicatorScale",
 	
-	'theme_action_key': $"VBoxContainer/TabContainer/Dialog Box/Column3/GridContainer/BoxContainer/ActionOptionButton",
 	'animation_show_time': $"VBoxContainer/TabContainer/Dialog Box/Column3/GridContainer/ShowTime/SpinBox",
+	'animation_dim_color': $"VBoxContainer/TabContainer/Dialog Box/Column3/GridContainer/DimColor/ColorPickerButton",
 	
 	# Character Names
 	'name_font': $"VBoxContainer/TabContainer/Name Label/Column/GridContainer/RegularFont/NameFontButton",
@@ -110,9 +102,6 @@ onready var n : Dictionary = {
 	'button_fixed_x': $"VBoxContainer/TabContainer/Choice Buttons/Column2/GridContainer/HBoxContainer2/ButtonSizeX",
 	'button_fixed_y': $"VBoxContainer/TabContainer/Choice Buttons/Column2/GridContainer/HBoxContainer2/ButtonSizeY",
 
-	'button_use_native': $"VBoxContainer/TabContainer/Choice Buttons/Column3/GridContainer/CheckBox",
-	'button_use_custom': $"VBoxContainer/TabContainer/Choice Buttons/Column3/GridContainer/HBoxContainer5/CustomButtonsCheckBox",
-	'button_custom_path': $"VBoxContainer/TabContainer/Choice Buttons/Column3/GridContainer/HBoxContainer5/CustomButtonsButton",
 	'button_padding_x': $"VBoxContainer/TabContainer/Choice Buttons/Column2/GridContainer/HBoxContainer/TextOffsetH",
 	'button_padding_y': $"VBoxContainer/TabContainer/Choice Buttons/Column2/GridContainer/HBoxContainer/TextOffsetV",
 	'button_separation': $"VBoxContainer/TabContainer/Choice Buttons/Column2/GridContainer/VerticalSeparation",
@@ -227,7 +216,7 @@ func _ready() -> void:
 	
 	n['button_layout'].connect('item_selected', self, '_on_button_layout_selected')
 	
-	for button in ['dialog_box_anchor', 'button_position_on_screen']:
+	for button in ['dialog_box_anchor', 'button_position_on_screen', 'alignment']:
 		var button_positions_popup = n[button].get_popup()
 		button_positions_popup.clear()
 		button_positions_popup.add_icon_item(
@@ -251,8 +240,10 @@ func _ready() -> void:
 		button_positions_popup.add_icon_item(
 			get_icon("ControlAlignBottomRight", "EditorIcons"), "Bottom Right", 8)
 	
+	
 	n['button_position_on_screen'].connect('item_selected', self, '_on_button_anchor_selected')
 	n['dialog_box_anchor'].connect('item_selected', self, '_on_button_dialogbox_anchor_selected')
+	n['alignment'].connect('item_selected', self, '_on_Alignment_item_selected')
 	
 	n['button_offset_x'].connect('value_changed', self, '_on_button_offset_changed')
 	n['button_offset_y'].connect('value_changed', self, '_on_button_offset_changed')
@@ -302,28 +293,15 @@ func character_picker_selected(index):
 	_on_PreviewButton_pressed()
 
 
-func setup_advanced_containers():
-	use_advanced_themes = DialogicResources.get_settings_config().get_value('dialog', 'advanced_themes', false)
-	
-	for key in advanced_containers:
-		var c = advanced_containers[key]
-		if use_advanced_themes:
-			c["container"].show()
-			c["disabled_text"].hide()
-		else:
-			c["container"].hide()
-			c["disabled_text"].show()
-
-
 func load_theme(filename):
 	loading = true
 	current_theme = filename
 	var theme = DialogicResources.get_theme_config(filename)
 	var default_background = 'res://addons/dialogic/Example Assets/backgrounds/background-2.png'
-	setup_advanced_containers()
 	# Settings
-	n['theme_action_key'].text = theme.get_value('settings', 'action_key', '[Default]')
 	n['single_portrait_mode'].pressed = theme.get_value('settings', 'single_portrait_mode', false) # Currently in Dialog Text tab
+	
+	n['animation_dim_color'].color = Color(theme.get_value('animation', 'dim_color', '#ff808080'))
 	
 	# Background
 	n['theme_background_image'].text = DialogicResources.get_filename_from_path(theme.get_value('background', 'image', default_background))
@@ -350,9 +328,6 @@ func load_theme(filename):
 	n['box_margin_h'].value = theme.get_value('box', 'box_margin_h', theme.get_value('box', 'bottom_gap', 40))
 	
 	# Buttons
-	n['button_use_native'].pressed = theme.get_value('buttons', 'use_native', false)
-	n['button_use_custom'].pressed = theme.get_value('buttons', 'use_custom', false)
-	n['button_custom_path'].text = DialogicResources.get_filename_from_path(theme.get_value('buttons', 'custom_path', ""))
 	n['button_padding_x'].value = theme.get_value('buttons', 'padding', Vector2(5,5)).x
 	n['button_padding_y'].value = theme.get_value('buttons', 'padding', Vector2(5,5)).y
 	n['button_separation'].value = theme.get_value('buttons', 'gap', 5)
@@ -368,8 +343,9 @@ func load_theme(filename):
 	
 	
 	var default_style = [false, Color.white, false, Color.black, true, default_background, false, Color.white]
+	var hover_style = [true, Color( 0.698039, 0.698039, 0.698039, 1 ), false, Color.black, true, default_background, false, Color.white]
 	n['button_normal'].load_style(theme.get_value('buttons', 'normal', default_style))
-	n['button_hover'].load_style(theme.get_value('buttons', 'hover', default_style))
+	n['button_hover'].load_style(theme.get_value('buttons', 'hover', hover_style))
 	n['button_pressed'].load_style(theme.get_value('buttons', 'pressed', default_style))
 	n['button_disabled'].load_style(theme.get_value('buttons', 'disabled', default_style))
 	
@@ -403,15 +379,8 @@ func load_theme(filename):
 	n['theme_shadow_offset_y'].value = theme.get_value('text', 'shadow_offset', Vector2(2,2)).y
 	n['theme_text_margin'].value = theme.get_value('text', 'margin', Vector2(20, 10)).x
 	n['theme_text_margin_h'].value = theme.get_value('text', 'margin', Vector2(20, 10)).y
-	n['alignment'].text = theme.get_value('text', 'alignment', 'Left')
-	match n['alignment'].text:
-		'Left':
-			n['alignment'].select(0)
-		'Center':
-			n['alignment'].select(1)
-		'Right':
-			n['alignment'].select(2)
-	
+	n['alignment'].select(n['alignment'].get_item_index(theme.get_value('text', 'alignment', 0)))
+
 	
 	# Name
 	n['name_font'].text = DialogicResources.get_filename_from_path(theme.get_value('name', 'font', 'res://addons/dialogic/Example Assets/Fonts/NameFont.tres'))
@@ -462,7 +431,7 @@ func load_theme(filename):
 		if a == next_animation_selected:
 			n['next_animation'].select(nix)
 		nix += 1
-	
+
 	# Preview text
 	n['text_preview'].text = theme.get_value('text', 'preview', 'This is preview text. You can use  [color=#A5EFAC]BBCode[/color] to style it.\n[wave amp=50 freq=2]You can even use effects![/wave]')
 	
@@ -494,7 +463,7 @@ func duplicate_theme(from_filename) -> void:
 func _on_visibility_changed() -> void:
 	if visible:
 		# Refreshing the dialog 
-		_on_PreviewButton_pressed()
+		if not loading: _on_PreviewButton_pressed()
 		if first_time_loading_theme_full_size_bug == 0:
 			yield(get_tree().create_timer(0.01), "timeout")
 			for i in $VBoxContainer/Panel.get_children():
@@ -514,7 +483,7 @@ func _on_DelayPreview_timer_timeout() -> void:
 func _on_PreviewButton_pressed() -> void:
 	for i in $VBoxContainer/Panel.get_children():
 		i.free()
-	var preview_dialog = Dialogic.start('', '', "res://addons/dialogic/Nodes/DialogNode.tscn", false, false)
+	var preview_dialog = Dialogic.start('', '', "res://addons/dialogic/Nodes/DialogNode.tscn", false)
 	preview_dialog.preview = true
 	
 	if n['character_picker']: # Sometimes it can't find the node
@@ -530,7 +499,7 @@ func _on_PreviewButton_pressed() -> void:
 				{ 'event_id':'dialogic_001', "character": preview_character_selected, "portrait":"", "text":n['text_preview'].text }
 			]
 		}
-	preview_dialog.parse_characters(preview_dialog.dialog_script)
+	preview_dialog.dialog_script = DialogicParser.parse_characters(preview_dialog.dialog_script)
 	$VBoxContainer/Panel.add_child(preview_dialog)
 	
 	# maintaining the preview panel big enough for the dialog box
@@ -649,12 +618,7 @@ func _on_NameFontOpen_pressed():
 func _on_Alignment_item_selected(index) -> void:
 	if loading:
 		return
-	if index == 0:
-		DialogicResources.set_theme_value(current_theme, 'text', 'alignment', 'Left')
-	elif index == 1:
-		DialogicResources.set_theme_value(current_theme, 'text', 'alignment', 'Center')
-	elif index == 2:
-		DialogicResources.set_theme_value(current_theme, 'text', 'alignment', 'Right')
+	DialogicResources.set_theme_value(current_theme, 'text', 'alignment', n['alignment'].get_item_id(index))
 	_on_PreviewButton_pressed() # Refreshing the preview
 
 
@@ -733,6 +697,12 @@ func _on_BackgroundColor_ColorPickerButton_color_changed(color) -> void:
 	DialogicResources.set_theme_value(current_theme, 'background', 'color', '#' + color.to_html())
 	$DelayPreviewTimer.start(0.5) # Calling a timer so the update doesn't get triggered many times
 
+# Dim Color
+func _on_DimColor_ColorPickerButton_color_changed(color) -> void:
+	if loading:
+		return
+	DialogicResources.set_theme_value(current_theme, 'animation', 'dim_color', '#' + color.to_html())
+
 # Next indicator
 func _on_NextIndicatorButton_pressed() -> void:
 	editor_reference.godot_dialog("*.png")
@@ -766,22 +736,6 @@ func _on_NextOffset_value_changed(value):
 	var offset_value = Vector2(n['next_indicator_offset_x'].value, n['next_indicator_offset_y'].value)
 	DialogicResources.set_theme_value(current_theme, 'next_indicator', 'offset', offset_value)
 	_on_PreviewButton_pressed() # Refreshing the preview
-
-
-func _on_ActionOptionButton_item_selected(index) -> void:
-	if loading:
-		return
-	DialogicResources.set_theme_value(current_theme, 'settings','action_key', n['theme_action_key'].text)
-
-
-func _on_ActionOptionButton_pressed() -> void:
-	var theme = DialogicResources.get_theme_config(current_theme)
-	n['theme_action_key'].clear()
-	n['theme_action_key'].add_item(theme.get_value('settings', 'action_key', '[Default]'))
-	n['theme_action_key'].add_item('[Default]')
-	InputMap.load_from_globals()
-	for a in InputMap.get_actions():
-		n['theme_action_key'].add_item(a)
 
 
 ## ------------ 		NAME LABEL TAB	 	------------------------------------
@@ -943,9 +897,6 @@ func _on_native_button_toggled(button_pressed) -> void:
 
 func toggle_button_customization_fields(native_enabled: bool, custom_enabled: bool) -> void:
 	var customization_disabled = native_enabled or custom_enabled
-	n['button_use_native'].disabled = custom_enabled
-	n['button_use_custom'].disabled = native_enabled
-	n['button_custom_path'].disabled = native_enabled
 	n['button_padding_x'].editable = not customization_disabled
 	n['button_padding_y'].editable = not customization_disabled
 
@@ -960,13 +911,6 @@ func _on_CustomButtonsCheckBox_toggled(button_pressed):
 func _on_CustomButtonsButton_pressed():
 	editor_reference.godot_dialog("*.tscn")
 	editor_reference.godot_dialog_connect(self, "_on_custom_button_selected")
-
-
-func _on_custom_button_selected(path, target) -> void:
-	if loading:
-		return
-	DialogicResources.set_theme_value(current_theme, 'buttons', 'custom_path', path)
-	n['button_custom_path'].text = DialogicResources.get_filename_from_path(path)
 
 
 ## ------------ 		GLOSSARY  TAB	 	------------------------------------

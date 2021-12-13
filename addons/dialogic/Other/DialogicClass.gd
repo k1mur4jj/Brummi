@@ -29,11 +29,9 @@ class_name Dialogic
 ##								In that case, you should do  Dialogic.load() or Dialogic.import() before.
 ## @param default_timeline		If timeline == '' and no valid data was found, this will be loaded.
 ## @param dialog_scene_path		If you made a custom Dialog scene or moved it from its default path, you can specify its new path here.
-## @param debug_mode			Debug is disabled by default but can be enabled if needed.
 ## @param use_canvas_instead	Create the Dialog inside a canvas layer to make it show up regardless of the camera 2D/3D situation.
 ## @returns						A Dialog node to be added into the scene tree.
-static func start(timeline: String = '', default_timeline: String ='', dialog_scene_path: String="res://addons/dialogic/Nodes/DialogNode.tscn", debug_mode: bool=false, use_canvas_instead=true):
-	
+static func start(timeline: String = '', default_timeline: String ='', dialog_scene_path: String="res://addons/dialogic/Nodes/DialogNode.tscn", use_canvas_instead=true):
 	var dialog_scene = load(dialog_scene_path)
 	var dialog_node = null
 	var canvas_dialog_node = null
@@ -46,8 +44,6 @@ static func start(timeline: String = '', default_timeline: String ='', dialog_sc
 		dialog_node = canvas_dialog_node.dialog_node
 	else:
 		dialog_node = dialog_scene.instance()
-	
-	dialog_node.debug_mode = debug_mode
 	
 	returned_dialog_node = dialog_node if not canvas_dialog_node else canvas_dialog_node
 	
@@ -113,7 +109,6 @@ static func load(slot_name: String = ''):
 ## 
 ## @param slot_name		The name of the save slot. To load this save you have to specify the same
 ##						If the slot folder doesn't exist it will be created. 
-##						Leaving this empty will use the last loaded save slot.
 static func save(slot_name: String = '', is_autosave = false) -> void:
 	# check if to save (if this is a autosave)
 	if is_autosave and not get_autosave():
@@ -281,6 +276,11 @@ static func get_current_timeline():
 	if timeline == null:
 		timeline = ''
 	return timeline
+
+
+# Returns a string with the action button set on the project settings
+static func get_action_button():
+	return DialogicResources.get_settings_value('input', 'default_action_key', 'ui_accept')
 
 ################################################################################
 ## 					NOT TO BE USED FROM OUTSIDE

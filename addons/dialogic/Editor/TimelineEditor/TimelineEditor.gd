@@ -39,6 +39,8 @@ var id_to_scene_name = {
 	'dialogic_012':'Condition',
 	'dialogic_013':'EndBranch',
 	'dialogic_014':'SetValue',
+	'dialogic_015':'LabelEvent',
+	'dialogic_016':'GoTo Event',
 	#Timeline
 	'dialogic_020':'ChangeTimeline',
 	'dialogic_021':'ChangeBackground',
@@ -60,6 +62,7 @@ var batches = []
 var building_timeline = true
 signal selection_updated
 signal batch_loaded
+signal timeline_loaded
 
 func _ready():
 	editor_reference = find_parent('EditorView')
@@ -256,7 +259,7 @@ func _input(event):
 			else:
 				at_index = timeline.get_child_count()
 			TimelineUndoRedo.create_action("[D] Add Text event.")
-			TimelineUndoRedo.add_do_method(self, "create_event", "dialogic_000", {'no-data': true}, true, at_index, true)
+			TimelineUndoRedo.add_do_method(self, "create_event", "dialogic_001", {'no-data': true}, true, at_index, true)
 			TimelineUndoRedo.add_undo_method(self, "remove_events_at_index", at_index, 1)
 			TimelineUndoRedo.commit_action()
 			get_tree().set_input_as_handled()
@@ -868,6 +871,7 @@ func _on_batch_loaded():
 		events_warning.visible = false
 		indent_events()
 		building_timeline = false
+		emit_signal("timeline_loaded")
 	add_extra_scroll_area_to_timeline()
 
 
@@ -1053,6 +1057,13 @@ func unfold_all_nodes():
 		event.set_expanded(true)
 	add_extra_scroll_area_to_timeline()
 
+func get_current_events_anchors():
+	var anchors = {}
+	for event in timeline.get_children():
+		if "event_data" in event:
+			if event.event_data['event_id'] == 'dialogic_015':
+				anchors[event.event_data['id']] = event.event_data['name']
+	return anchors
 
 func add_extra_scroll_area_to_timeline():
 	if timeline.get_children().size() > 4:
