@@ -179,6 +179,11 @@
 			"value": ""
 		},
 		{
+			"action": "leaveall",
+			"character": "[All]",
+			"event_id": "dialogic_003"
+		},
+		{
 			"action": "join",
 			"character": "character-1639162184.json",
 			"event_id": "dialogic_002",
@@ -209,6 +214,11 @@
 			"value": ""
 		},
 		{
+			"action": "leaveall",
+			"character": "[All]",
+			"event_id": "dialogic_003"
+		},
+		{
 			"action": "join",
 			"character": "character-1639162184.json",
 			"event_id": "dialogic_002",
@@ -237,7 +247,7 @@
 		}
 	],
 	"metadata": {
-		"dialogic-version": "1.3",
+		"dialogic-version": "1.4 - DEV",
 		"file": "timeline-1639162524.json",
 		"name": "FirstMeetPedolino"
 	}
