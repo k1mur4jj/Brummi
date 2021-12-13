@@ -482,7 +482,7 @@ points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
 [sub_resource type="Animation" id=50]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Pedolino:rotation_degrees")
+tracks/0/path = NodePath("Pedolino:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -491,10 +491,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 15.0 ]
+"values": [ Vector2( 3408, -742 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Pedolino:position")
+tracks/1/path = NodePath("Pedolino:rotation_degrees")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -503,7 +503,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 4419, -1162 ) ]
+"values": [ 0.0 ]
 }
 
 [sub_resource type="RectangleShape2D" id=51]
@@ -528,24 +528,13 @@ position = Vector2( -1235, -1679 )
 texture = ExtResource( 11 )
 centered = false
 
-[node name="ParallaxLayer4" type="ParallaxLayer" parent="Background/ParallaxBackground"]
-motion_scale = Vector2( 0.8, 1 )
-motion_mirroring = Vector2( 3840, 0 )
-
-[node name="Sprite2" type="Sprite" parent="Background/ParallaxBackground/ParallaxLayer4"]
-position = Vector2( -665, -1493 )
-scale = Vector2( 0.5, 0.5 )
-z_index = -1
-texture = ExtResource( 10 )
-centered = false
-
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="Background/ParallaxBackground"]
+motion_scale = Vector2( 0.5, 1 )
 motion_mirroring = Vector2( 2086, 0 )
 
 [node name="Sprite3" type="Sprite" parent="Background/ParallaxBackground/ParallaxLayer3"]
 self_modulate = Color( 0.211765, 0.129412, 0.32549, 1 )
-position = Vector2( 0, -542 )
-z_index = -1
+position = Vector2( 0, -1117 )
 texture = ExtResource( 7 )
 centered = false
 
@@ -839,19 +828,19 @@ smoothing_enabled = true
 anims/MeetPedolino = ExtResource( 8 )
 anims/RESET = SubResource( 50 )
 
-[node name="Pedolino" type="Sprite" parent="."]
-position = Vector2( 4419, -1162 )
-rotation = 0.261799
-scale = Vector2( 0.223958, 0.216146 )
-z_index = -2
-texture = ExtResource( 6 )
-
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2( 3583, -1258 )
 script = ExtResource( 13 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+pause_mode = 1
 position = Vector2( -509.5, 105 )
 shape = SubResource( 51 )
+
+[node name="Pedolino" type="Sprite" parent="."]
+position = Vector2( 3408, -742 )
+scale = Vector2( 0.232292, 0.232292 )
+z_index = -2
+texture = ExtResource( 6 )
 
 [connection signal="body_entered" from="Area2D" to="BrummiPlayer" method="_On_Area2D_body_entered"]
