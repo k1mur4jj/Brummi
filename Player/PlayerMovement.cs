@@ -3,136 +3,117 @@ using System;
 
 public class PlayerMovement : KinematicBody2D
 {
-	private Vector2 _velocity = new Vector2(0,0);
-	private int _maxSpeed = 600;
-	private int _speed = 700;
-	private int _gravity = 100;
-	private int _jumpSpeed = 5;
-	private AnimationPlayer _animationPlayer;
-	private Joystick _joystick;
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-		_joystick = GetNode<Joystick> ("JoystickCanvasLayer/JoyStickSprite/JoyStickTouchScreenButton");
-		var skeleton = GetNode<Skeleton2D> ("Skeleton2D");
-		skeleton.Scale = new Vector2(0.3f,0.3f);
+    private int _xVelocity = 700;// What te heck is this unit? mm/s ??
+    private int _yVelocity = -2500;
+    private int _gravity = 100;
 
-		_joystick.Connect("JumpOnTouch",this,nameof(_OnJumpTouch));
-		if(!OS.HasTouchscreenUiHint())
-		{
-			((Sprite)_joystick.GetParent()).Hide();
-		}
-		
-	}
+    private Vector2 _velocity = new Vector2(0, 0);
 
-	private bool _jump = false;
+    private AnimationPlayer _animationPlayer;
+    private Joystick _joystick;
 
-	public void _OnJumpTouch() 
-	{
-		if(IsOnFloor())
-		{
-			_jump = true;
-		}
-	}
-	
-	public override void _PhysicsProcess(float delta)
-	{
+    private bool _jump = false;
 
-		if(OS.HasTouchscreenUiHint())
-		{
-			if (_jump == true)
-			{
-				_jump = false;
-				_velocity = new Vector2(_joystick.GetValue().x*_speed,-2500.0f);
-				
-			}
-			else
-			{
-					_velocity = new Vector2(_joystick.GetValue().x*_speed,_velocity.y);
-			}
-			
-		}
-		else
-		{
-			if(IsOnFloor())
-			{
-			
-				if(Input.IsActionPressed("jump"))
-				{
-					_animationPlayer.Play("Jump");
-					_velocity = new Vector2(0,-2500.0f);
-					
-				}
-				else if(Input.IsActionPressed("move_right"))
-				{
-					_velocity.x = _speed;
-				}
-				else if(Input.IsActionPressed("move_left"))
-				{
-					_velocity.x = -_speed;
-				}		
-				else 
-				{
-					_velocity.x = 0;
-					_animationPlayer.Play("Idle");
-				}
-			
-			}
-			else
-			{
-				if (_velocity.y < 0)
-				{
-					_animationPlayer.Play("Jump");
-				}
-				if(Input.IsActionPressed("move_right"))
-				{
-					_velocity.x = _speed;
-				}
-				if(Input.IsActionPressed("move_left"))
-				{
-					_velocity.x = -_speed;				
-				}		
-			}
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
+    {
+        _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        _joystick = GetNode<Joystick>("JoystickCanvasLayer/JoyStickSprite/JoyStickTouchScreenButton");
+        var skeleton = GetNode<Skeleton2D>("Skeleton2D");
+        skeleton.Scale = new Vector2(0.3f, 0.3f);
 
-		}
-		// if(_velocity.x > 0)		
-		// {
-		// 	ApplyScale(new Vector2(1,1));
-		// }
-		// else if(_velocity.x < 0 )
-		// {a
-		// 	ApplyScale(new Vector2(-1,1));
-		// }
-	
+        _joystick.Connect("JumpOnTouch", this, nameof(_OnJumpTouch));
+        if (!OS.HasTouchscreenUiHint())
+        {
+            ((Sprite)_joystick.GetParent()).Hide();
+        }
+    }
 
-		if(_velocity.x != 0 && IsOnFloor())
-		{
-			_animationPlayer.Play("Run");
-		}
-		else if( IsOnFloor())
-		{
-			_animationPlayer.Play("Idle");
-		}
-		
-		_velocity.y += _gravity;
-		_velocity = MoveAndSlide(_velocity,new Vector2(0,-1));
-		
-	}
+    public override void _PhysicsProcess(float delta)
+    {
+        // Process user input that impacts the movement
+        ProcessInput();
 
-	private bool _alreadyMet = false;
-	public void _On_Area2D_body_entered(Area2D area)
-	{
-		if(_alreadyMet == false)
-		{
-			AnimationPlayer worldPlayer = GetNode<AnimationPlayer>("../AnimationPlayer");
-			worldPlayer.Play("MeetPedolino");
-			_alreadyMet = true;
-			var dialog = DialogicSharp.Start("FirstMeetPedolino"); 
-			GetParent().AddChild(dialog);
-		}
+        // Update the animation based on the current velocity and world position
+        UpdateAnimation();
 
-	}
+        // Apply gravity
+        _velocity.y += _gravity;
 
+        // Apply velocity to body
+        _velocity = MoveAndSlide(_velocity, new Vector2(0, -1));
+    }
+
+    private void ProcessInput()
+    {
+        if (OS.HasTouchscreenUiHint())
+        {
+            if (_jump == true)
+            {
+                _jump = false;
+                _velocity = new Vector2(_joystick.GetValue().x * _xVelocity, _yVelocity);
+            }
+            else
+            {
+                _velocity = new Vector2(_joystick.GetValue().x * _xVelocity, _velocity.y);
+            }
+
+            // Alternative shorter version. Not tested because I dont know how, but should work.
+            //if (_jump)
+            //    _velocity.y = _yVelocity;
+            //_velocity.x = _joystick.GetValue().x * _xVelocity;
+        }
+        else
+        {
+            _velocity.x = 0;
+            bool right = Input.IsActionPressed("move_right");
+            bool left = Input.IsActionPressed("move_left");
+            bool jump = Input.IsActionPressed("jump");
+
+            if (jump && IsOnFloor())
+                _velocity.y = _yVelocity;
+            if (right)
+                _velocity.x += _xVelocity;
+            if (left)
+                _velocity.x -= _xVelocity;
+        }
+    }
+
+    private void UpdateAnimation()
+    {
+        if (IsOnFloor())
+        {
+            if (_velocity.x != 0)
+                _animationPlayer.Play("Run");
+            else
+                _animationPlayer.Play("Idle");
+        }
+        else
+        {
+            _animationPlayer.Play("Jump");
+        }
+    }
+
+    private void _OnJumpTouch()
+    {
+        if (IsOnFloor())
+        {
+            _jump = true;
+        }
+    }
+
+    private bool _alreadyMet = false;
+    public void _On_Area2D_body_entered(Area2D area)
+    {
+        if (_alreadyMet == false)
+        {
+            AnimationPlayer worldPlayer = GetNode<AnimationPlayer>("../AnimationPlayer");
+            worldPlayer.Play("MeetPedolino");
+            _alreadyMet = true;
+            var dialog = DialogicSharp.Start("FirstMeetPedolino");
+            GetParent().AddChild(dialog);
+        }
+
+    }
 }
 
