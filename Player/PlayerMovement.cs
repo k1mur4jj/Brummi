@@ -20,7 +20,7 @@ public class PlayerMovement : KinematicBody2D
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _joystick = GetNode<Joystick>("JoystickCanvasLayer/JoyStickSprite/JoyStickTouchScreenButton");
         var skeleton = GetNode<Skeleton2D>("Skeleton2D");
-        skeleton.Scale = new Vector2(0.2f, 0.2f);
+        // skeleton.Scale = new Vector2(0.2f, 0.2f);
 
         _joystick.Connect("JumpOnTouch", this, nameof(_OnJumpTouch));
         if (!OS.HasTouchscreenUiHint())
@@ -76,11 +76,14 @@ public class PlayerMovement : KinematicBody2D
             {
                 
                 _velocity.x += _xVelocity;
+                // ApplyScale(new Vector2(1,1));
+                
             }
             if (left)
             {
                 
                 _velocity.x -= _xVelocity;
+                // ApplyScale(new Vector2(-1,1));
             }
         }
     }

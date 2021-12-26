@@ -38,7 +38,7 @@ public class Joystick : TouchScreenButton
     }
     public override void _Input(InputEvent inputEvent)
     {
-
+ 
 
         if (inputEvent is InputEventScreenDrag dragEvent)
         {
