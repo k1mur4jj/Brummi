@@ -818,11 +818,15 @@ texture = ExtResource( 5 )
 offset = Vector2( 639.932, 560.883 )
 
 [node name="BrummiPlayer" parent="." instance=ExtResource( 1 )]
+visible = false
 position = Vector2( 118, 212 )
-scale = Vector2( 0.3, 0.3 )
 
-[node name="Camera2D" type="Camera2D" parent="BrummiPlayer"]
-position = Vector2( 0, -366 )
+[node name="BrummiPlayerNew" parent="." instance=ExtResource( 9 )]
+position = Vector2( -5, 256 )
+
+[node name="Camera2D" type="Camera2D" parent="BrummiPlayerNew"]
+position = Vector2( 118, 102.2 )
+scale = Vector2( 0.3, 0.3 )
 current = true
 smoothing_enabled = true
 
@@ -844,9 +848,5 @@ position = Vector2( 3408, -742 )
 scale = Vector2( 0.232292, 0.232292 )
 z_index = -2
 texture = ExtResource( 6 )
-
-[node name="Node2D" parent="." instance=ExtResource( 9 )]
-position = Vector2( 340, 250 )
-scale = Vector2( 0.2, 0.2 )
 
 [connection signal="body_entered" from="Area2D" to="BrummiPlayer" method="_On_Area2D_body_entered"]
