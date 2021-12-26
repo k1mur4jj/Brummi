@@ -73,9 +73,15 @@ public class PlayerMovement : KinematicBody2D
             if (jump && IsOnFloor())
                 _velocity.y = _yVelocity;
             if (right)
+            {
+                
                 _velocity.x += _xVelocity;
+            }
             if (left)
+            {
+                
                 _velocity.x -= _xVelocity;
+            }
         }
     }
 

@@ -20,7 +20,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 39.8374, -30.2156 ), Vector2( 40.1074, 19.7837 ), Vector2( 39.9184, -15.2158 ), Vector2( 40.0264, 4.78394 ), Vector2( 54.8102, -35.2965 ), Vector2( 49.8643, -25.2697 ), Vector2( 49.9993, -0.27002 ) ]
+"values": [ Vector2( 45, 6 ), Vector2( 40.1074, 19.7837 ), Vector2( 39.9184, -15.2158 ), Vector2( 40.0264, 4.78394 ), Vector2( 54.8102, -35.2965 ), Vector2( 49.8643, -25.2697 ), Vector2( 49.9993, -0.27002 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Skeleton2D/Hip/LegL:rotation_degrees")
@@ -53,10 +53,10 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.67491 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 3.10976, -350.022 ), Vector2( 2.86674, -395.021 ), Vector2( 2.86674, -395.021 ), Vector2( 2.78573, -410.021 ), Vector2( 2.89374, -390.021 ), Vector2( 3.10976, -350.022 ), Vector2( 2.89374, -390.021 ) ]
+"values": [ Vector2( 2, -396 ), Vector2( 2.86674, -395.021 ), Vector2( 2.86674, -395.021 ), Vector2( 2.78573, -410.021 ), Vector2( 2.89374, -390.021 ), Vector2( 3.10976, -350.022 ), Vector2( 2.89374, -390.021 ), Vector2( 2.89374, -390.021 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("Skeleton2D/Eyes:rotation_degrees")
@@ -68,7 +68,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ -1.8026, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+"values": [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath("Skeleton2D/Eyes:scale")
@@ -92,7 +92,7 @@ tracks/6/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 9.59482, -75.0529 ), Vector2( 9.3248, -125.052 ), Vector2( 9.3248, -125.052 ), Vector2( 9.3248, -125.052 ), Vector2( 9.3248, -125.052 ), Vector2( 9.4328, -105.052 ), Vector2( 9.4328, -105.052 ) ]
+"values": [ Vector2( 8, -124 ), Vector2( 9.3248, -125.052 ), Vector2( 9.3248, -125.052 ), Vector2( 9.3248, -125.052 ), Vector2( 9.3248, -125.052 ), Vector2( 9.4328, -105.052 ), Vector2( 9.4328, -105.052 ) ]
 }
 tracks/7/type = "value"
 tracks/7/path = NodePath("Skeleton2D/Hip:rotation_degrees")
@@ -128,7 +128,7 @@ tracks/9/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -55.1612, -29.7025 ), Vector2( -60.0261, -4.67589 ), Vector2( -65.0531, -9.6488 ), Vector2( -59.9991, 0.324051 ), Vector2( -55.1342, -24.7026 ), Vector2( -65.08, -14.6487 ), Vector2( -64.9721, 5.35098 ) ]
+"values": [ Vector2( -60, 12 ), Vector2( -60.0261, -4.67589 ), Vector2( -65.0531, -9.6488 ), Vector2( -59.9991, 0.324051 ), Vector2( -55.1342, -24.7026 ), Vector2( -65.08, -14.6487 ), Vector2( -64.9721, 5.35098 ) ]
 }
 tracks/10/type = "value"
 tracks/10/path = NodePath("Skeleton2D/Hip/LegR:rotation_degrees")
@@ -200,7 +200,7 @@ tracks/15/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 39.0813, -170.214 ), Vector2( 39.0813, -170.214 ), Vector2( 39.0813, -170.214 ), Vector2( 39.0813, -170.214 ), Vector2( 39.0813, -170.214 ), Vector2( 43.8923, -205.24 ), Vector2( 43.8923, -205.24 ) ]
+"values": [ Vector2( 38, -218 ), Vector2( 39.0813, -170.214 ), Vector2( 39.0813, -170.214 ), Vector2( 39.0813, -170.214 ), Vector2( 39.0813, -170.214 ), Vector2( 43.8923, -205.24 ), Vector2( 43.8923, -205.24 ) ]
 }
 tracks/16/type = "value"
 tracks/16/path = NodePath("Skeleton2D/Heart:rotation_degrees")
@@ -329,10 +329,10 @@ tracks/26/loop_wrap = true
 tracks/26/imported = false
 tracks/26/enabled = true
 tracks/26/keys = {
-"times": PoolRealArray( 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -785,20 +785,17 @@ rest = Transform2D( 1, 0, 0, 1, 8, -124 )
 [node name="Chest" type="Bone2D" parent="Skeleton2D/Hip"]
 position = Vector2( 1, -83 )
 rotation = 0.0171815
-scale = Vector2( 1, 1 )
 rest = Transform2D( 0.999852, 0.0171806, -0.0171806, 0.999852, 1, -83 )
 
 [node name="ArmL" type="Bone2D" parent="Skeleton2D/Hip/Chest"]
 position = Vector2( 27.2056, -46.4742 )
-rotation = 0.948249
-scale = Vector2( 1, 1 )
+rotation = 0.94825
 rest = Transform2D( 0.583107, 0.812396, -0.812396, 0.583107, 27.2056, -46.4742 )
 default_length = 136.0
 
 [node name="ArmR" type="Bone2D" parent="Skeleton2D/Hip/Chest"]
 position = Vector2( -66.6775, -38.8602 )
-rotation = 1.92678
-scale = Vector2( 1, 1 )
+rotation = 1.92679
 rest = Transform2D( -0.348515, 0.937303, -0.937303, -0.348515, -66.6775, -38.8602 )
 default_length = 106.0
 
@@ -812,14 +809,12 @@ default_length = 115.0
 [node name="LegL" type="Bone2D" parent="Skeleton2D/Hip"]
 position = Vector2( 45, 6 )
 rotation = 1.42198
-scale = Vector2( 1, 1 )
 rest = Transform2D( 0.148269, 0.988947, -0.988947, 0.148269, 45, 6 )
 default_length = 105.0
 
 [node name="LegR" type="Bone2D" parent="Skeleton2D/Hip"]
 position = Vector2( -60, 12 )
 rotation = 1.59322
-scale = Vector2( 1, 1 )
 rest = Transform2D( -0.0224261, 0.999749, -0.999749, -0.0224261, -60, 12 )
 default_length = 102.0
 
@@ -832,6 +827,7 @@ position = Vector2( 38, -218 )
 rest = Transform2D( 1, 0, 0, 1, 38, -218 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 2.0
 anims/Idle = ExtResource( 2 )
 anims/Jump = SubResource( 4 )
 anims/RESET = SubResource( 2 )
