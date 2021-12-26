@@ -1,10 +1,14 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Resources/BrummiNew.svg" type="Texture" id=1]
+
+[sub_resource type="Animation" id=1]
+resource_name = "BrummiNewIdle"
 
 [node name="Node2D" type="Node2D"]
 
 [node name="Polygons" type="Node2D" parent="."]
+scale = Vector2( 0.2, 0.2 )
 
 [node name="ArmLeft" type="Polygon2D" parent="Polygons"]
 position = Vector2( -808.871, -576.678 )
@@ -76,6 +80,7 @@ bones = [ "Hip", PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0 ), "Hip/Chest", PoolRe
 
 [node name="Skeleton2D" type="Skeleton2D" parent="."]
 rotation = 0.0054005
+scale = Vector2( 0.2, 0.2 )
 
 [node name="Hip" type="Bone2D" parent="Skeleton2D"]
 position = Vector2( 8, -124 )
@@ -129,3 +134,6 @@ rest = Transform2D( 1, 0, 0, 1, 2, -396 )
 [node name="Heart" type="Bone2D" parent="Skeleton2D"]
 position = Vector2( 38, -218 )
 rest = Transform2D( 1, 0, 0, 1, 38, -218 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/BrummiNewIdle = SubResource( 1 )
