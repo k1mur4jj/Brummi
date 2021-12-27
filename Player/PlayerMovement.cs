@@ -76,26 +76,95 @@ public class PlayerMovement : KinematicBody2D
             {
                 
                 _velocity.x += _xVelocity;
-                // ApplyScale(new Vector2(1,1));
-                
             }
             if (left)
             {
-                
                 _velocity.x -= _xVelocity;
                 // ApplyScale(new Vector2(-1,1));
             }
         }
     }
 
+// func h_flip_children():
+// 	for n in node.get_children():
+// 		if not (n extends Node2D):
+// 			continue
+		
+// 		if n extends CollisionShape2D or n extends CollisionObject2D:
+// 			n.rotate(-2.0 * n.get_rot())
+// 		else:
+// 			n.scale(Vector2(-1, 1))
+			
+// 		var pos = n.get_pos()
+// 		n.translate(Vector2(-2.0 * pos.x, 0.0))
+
+    private void FlipChildrenHorizontal()
+    {
+        foreach(var n in GetChildren())
+        {
+            var type = n.GetType();
+            if(type == typeof(Skeleton2D))
+            {
+                Skeleton2D skel = ((Skeleton2D)n);
+                skel.ApplyScale(new Vector2(-1,1));
+            }
+            if (type != typeof(Node2D))
+            {
+                continue;
+            }
+            Node2D node = (Node2D)n;
+            if(type == typeof(CollisionObject2D))
+            {
+                GD.Print(type.Name);
+                CollisionObject2D colObj = ((CollisionObject2D)node);
+                colObj.Rotate(-2.0f*colObj.Rotation);
+            }             
+            else if(type == typeof(CollisionShape2D))
+            {
+                CollisionShape2D colShape = ((CollisionShape2D)node);
+                colShape.Rotate(-2.0f*colShape.Rotation);
+            }
+         
+            else
+            {
+               node.ApplyScale(new Vector2(-1,1));
+            }
+            node.Translate(new Vector2(-2.0f*node.Position.x,0.0f));
+
+
+        }
+    }
+
+
+    private bool _flipH = false;
     private void UpdateAnimation()
     {
         if (IsOnFloor())
         {
-            if (_velocity.x != 0)
+            if (_velocity.x < 0)
+            {
+                if(_flipH == false)
+                {
+                    FlipChildrenHorizontal();
+                }
+                _flipH = true;
+                
                 _animationPlayer.Play("Run");
+            }
+            else if (_velocity.x > 0)
+            {
+
+                if(_flipH == true)
+                {
+                    FlipChildrenHorizontal();
+                }
+                _flipH = false;
+                _animationPlayer.Play("Run");
+            }
             else
+            {
                 _animationPlayer.Play("Idle");
+            }
         }
         else
         {
