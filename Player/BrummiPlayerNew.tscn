@@ -827,6 +827,7 @@ position = Vector2( 38, -218 )
 rest = Transform2D( 1, 0, 0, 1, 38, -218 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 1.7
 anims/Idle = ExtResource( 2 )
 anims/Jump = SubResource( 4 )
 anims/RESET = SubResource( 2 )
