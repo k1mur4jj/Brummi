@@ -1508,8 +1508,8 @@ position = Vector2( 372, 222 )
 scale = Vector2( 0.8, 0.8 )
 
 [node name="Camera2D" type="Camera2D" parent="BrummiPlayerNew"]
-position = Vector2( 118, 102.2 )
-scale = Vector2( 0.2, 0.2 )
+position = Vector2( 0, 1.25 )
+scale = Vector2( 0.5, 0.5 )
 current = true
 smoothing_enabled = true
 
